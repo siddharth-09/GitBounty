@@ -10,7 +10,9 @@ const handler = NextAuth({
         params: { scope: "public_repo" },  // ✅ allows creating issues
       },
     }),
+    
   ],
+  secret: process.env.SECRET,
 
   callbacks: {
     async jwt({ token, account }) {
