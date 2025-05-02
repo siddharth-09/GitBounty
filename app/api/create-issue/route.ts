@@ -1,4 +1,6 @@
 // app/api/create-issue/route.ts
+/* eslint-disable  @typescript-eslint/no-explicit-any */
+
 
 import { NextResponse } from "next/server"
 import { createClient } from '@/utils/supabase/client'
