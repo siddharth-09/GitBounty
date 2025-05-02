@@ -243,7 +243,7 @@ export default function BountyPage() {
       )}
 
       {/* Modal */}
-      {selectedProblem && viewMode === "modal" && (
+      {selectedProblem && (
         <ProblemCard problem={selectedProblem} onClose={handleClose} />
       )}
     </div>
