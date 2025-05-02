@@ -1,9 +1,10 @@
 'use client';
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+
 
 // Problem data type
 interface Problem {
@@ -117,7 +118,6 @@ export default function BountyPage() {
   const [problemId, setProblemId] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const router = useRouter();
 
   // Fetch problems from API
   useEffect(() => {
