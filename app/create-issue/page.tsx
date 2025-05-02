@@ -53,7 +53,8 @@ export default function CreateIssuePage() {
         labels: allLabels
       }),
     })
-
+    console.log(repo)
+    
     const data = await res.json()
     setResult(data)
   }
