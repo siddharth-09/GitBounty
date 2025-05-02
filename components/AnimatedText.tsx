@@ -1,5 +1,4 @@
-// src/components/AnimatedText.tsx
-"use client"
+"use client";
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 
@@ -13,17 +12,18 @@ const AnimatedText: React.FC = () => {
     if (!container) return;
 
     container.innerHTML = '';
-    const spans: HTMLSpanElement[] = [];
 
-    for (let i = 0; i < Math.max(original.length, hover.length); i++) {
+    const maxLength = Math.max(original.length, hover.length);
+
+    const spans = Array.from({ length: maxLength }).map((_, i) => {
       const span = document.createElement('span');
       span.dataset.original = original[i] || '';
       span.dataset.hover = hover[i] || '';
       span.textContent = original[i] || '';
       span.className = 'inline-block opacity-100';
       container.appendChild(span);
-      spans.push(span);
-    }
+      return span;
+    });
 
     const animateTo = (type: 'original' | 'hover') => {
       spans.forEach((span, i) => {
