@@ -1,0 +1,117 @@
+.profileCardContainer{
+    padding: 4rem;
+    min-height: 80vh;
+    margin: 3rem;
+    box-shadow: 0 0.1px 0.1px ;
+    background: rgba( 255, 255, 255, 0.25 );
+    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+    backdrop-filter: blur( 9.5px );
+    -webkit-backdrop-filter: blur( 9.5px );
+    border-radius: 10px;
+    border: 1px solid rgba( 255, 255, 255, 0.18 );
+    display: flex;
+/* justify-content: center; */
+    align-items: center;
+    flex-direction: column;
+}
+.profileImg {
+    height: 10rem;
+    width: 10rem;
+    border-radius: 50%;
+    display: block;
+  }
+  .profileImgContainer{
+    background: linear-gradient(to bottom, #ffffff, #666666);
+    padding: 5px; 
+    border-radius: 50%; 
+    display: inline-block;
+  }
+
+  
+  .handleButton {
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 3rem;
+    width: 13rem;
+    border-radius: 999px;
+    background: linear-gradient(90deg,  #6a0dad,#9d34fe, #6a0dad);
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    font-family: sans-serif;
+    box-shadow: 0 0 12px rgba(138, 43, 226, 0.6), 0 0 20px rgba(138, 43, 226, 0.4);
+    transition: all 0.3s ease;
+    border:3px solid grey;
+  }
+  .handleButton::before{
+    content:"";
+    position: absolute;
+    height: 2.7rem;
+    width: 12.7rem;
+    border-top:4px solid #913ae2;
+    border-bottom:3.8px solid #740bc0;
+    border-radius: 999px;
+  }
+  
+  .handleButton:hover {
+    box-shadow: 0 0 200px rgb(137, 43, 226), 0 0 30px rgb(137, 43, 226);
+    transform: translateY(-2px);
+  }
+  
+
+
+  /* profile table */
+  .profileTableContainer {
+    margin-top: 2rem;
+    width: 80%;
+    padding: 2rem;
+    background: linear-gradient(to bottom, #1c1c3b, #101020);
+    border-radius: 1rem;
+   
+  }
+  
+  .customTable {
+    width: 100%;
+    border-collapse: collapse;
+    color: white;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .customTable th, .customTable td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .customTable th {
+    font-weight: 600;
+    color: #ccc;
+    font-size: 0.9rem;
+  }
+  
+  .customTable td img.icon {
+    height: 1rem;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+  }
+  
+  .avatars img {
+    height: 2rem;
+    width: 2rem;
+    border-radius: 50%;
+    border: 2px solid #1c1c3b;
+    margin-left: -0.6rem;
+    background: #fff;
+  }
+  
+  .avatars img:first-child {
+    margin-left: 0;
+  }
+  
+  .status {
+    color: #00ff95;
+    font-weight: bold;
+  }
+  
