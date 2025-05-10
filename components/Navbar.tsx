@@ -12,7 +12,7 @@ const Navbar: React.FC = () => {
   ];
 
   return (
-    <nav className="w-full flex items-center justify-start px-8 py-4 fixed z-50">
+    <nav className="w-full flex items-center justify-start z-50">
       <div className="text-cyan-400 text-2xl font-bold font-orbitron mr-8">Git Bounty</div>
       <ul className="absolute left-1/2 -translate-x-1/2 flex gap-8 z-30">
         {navItems.map((item) => (

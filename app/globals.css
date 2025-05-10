@@ -141,3 +141,12 @@
     transform: rotate(360deg) scale(1, 1);
   }
 }
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #000341 0%, #161616 100%);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
