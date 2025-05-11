@@ -1,5 +1,5 @@
-"use client"
-/* eslint-disable  @typescript-eslint/no-explicit-any */
+"use client";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import React, { useEffect, useState } from "react";
 import { Label } from "@/components/ui/label";
@@ -7,23 +7,28 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { useSession } from "next-auth/react";
+import "../components/CreateIssueComponent.css"
+
 interface CreateIssueComponentProps {
   userName: string;
 }
+
 const CreateIssueComponent = (props: CreateIssueComponentProps) => {
   const [popup, setPopup] = useState(false);
   const [newIssueTitle, setNewIssueTitle] = useState("");
   const [newIssueDescription, setNewIssueDescription] = useState("");
+  const [newIssueStatement, setNewIssueSnewIssueStatement] = useState("");
   const [newIssueAmt, setNewIssueAmt] = useState("");
+  
   const [newIssueStatus, setNewIssueStatus] = useState("open");
   const [selectedRepo, setSelectedRepo] = useState("");
   const [selectedLabels, setSelectedLabels] = useState<string[]>([]);
   const [customLabelsInput, setCustomLabelsInput] = useState("");
-  const {data:session} = useSession()
-  const [repos, setRepos] = useState<any[]>([]) 
+  const { data: session } = useSession();
+  const [repos, setRepos] = useState<any[]>([]);
 
   const predefinedLabels = ["bug", "enhancement", "documentation", "question"];
-  const repoList = repos
+  const repoList = repos;
 
   const toggleLabel = (label: string) => {
     if (selectedLabels.includes(label)) {
@@ -32,39 +37,35 @@ const CreateIssueComponent = (props: CreateIssueComponentProps) => {
       setSelectedLabels([...selectedLabels, label]);
     }
   };
-useEffect(() => {
+
+  useEffect(() => {
     if (session?.accessToken) {
       async function repoView() {
         try {
-          const res = await fetch(`/api/view-repo?token=${session?.accessToken}`)
-          const data = await res.json()
-
-          // Map to extract name and owner login from the response
+          const res = await fetch(`/api/view-repo?token=${session?.accessToken}`);
+          const data = await res.json();
           const repoDetails = data.map((repo: any) => ({
             name: repo.name,
-            owner: repo.owner.login
-          }))
-          
-          setRepos(repoDetails)  // Store extracted data in state
+            owner: repo.owner.login,
+          }));
+          setRepos(repoDetails);
         } catch (error) {
-          console.error("Error fetching repos:", error)
+          console.error("Error fetching repos:", error);
         }
       }
-      
-      repoView()  // Call repoView when the component mounts
+      repoView();
     }
-  }, [session])
-  
+  }, [session]);
 
-  const handleCreateIssue = async() => {
+  const handleCreateIssue = async () => {
     const customLabels = customLabelsInput
       .split(",")
       .map((label) => label.trim())
       .filter((label) => label !== "");
 
     const allLabels = [...selectedLabels, ...customLabels];
-    if(session?.accessToken){
 
+    if (session?.accessToken) {
       const issueData = {
         title: newIssueTitle,
         description: newIssueDescription,
@@ -72,11 +73,11 @@ useEffect(() => {
         status: newIssueStatus,
         repository: selectedRepo,
         labels: allLabels,
+        statement: newIssueStatement,
       };
-      console.log(issueData.repository)
-  
+
       console.log("Issue created:", issueData);
-      // Here you would make API call to save issue data
+
       const res = await fetch("/api/create-issue", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -86,15 +87,16 @@ useEffect(() => {
           title: newIssueTitle,
           body: newIssueDescription,
           labels: allLabels,
-          userId:props.userName,
-        statement : newIssueDescription,
-        bounty_amt: newIssueAmt,
-        deadline : '10/10/2005',
-        status: newIssueStatus,
+          userId: props.userName,
+          statement: newIssueStatement,
+          bounty_amt: newIssueAmt,
+          deadline: '10/10/2005',
+          status: newIssueStatus,
         }),
-      })
-      console.log(res)
-      // Reset form
+      });
+
+      console.log(res);
+
       setNewIssueTitle("");
       setNewIssueDescription("");
       setNewIssueAmt("");
@@ -102,127 +104,119 @@ useEffect(() => {
       setSelectedRepo("");
       setSelectedLabels([]);
       setCustomLabelsInput("");
+      setNewIssueSnewIssueStatement("")
       setPopup(false);
     }
   };
 
   return (
-    <div className="p-6 max-w-3xl mx-auto bg-white rounded-xl shadow-lg">
-    <Button
-      onClick={() => setPopup(true)}
-      className="bg-[#4b2e17] text-white hover:bg-[#5a3c1c] rounded-md px-4 py-2"
-    >
-      Create New Issue
-    </Button>
-  
-    <Dialog open={popup} onOpenChange={setPopup}>
-      <DialogContent className="bg-gray-50 rounded-lg p-6">
-        <DialogHeader>
-          <DialogTitle className="text-2xl font-semibold text-[#4b2e17]">
-            Create New Issue
-          </DialogTitle>
-          <DialogDescription className="text-gray-600 mt-2">
-            Fill in the issue details below.
-          </DialogDescription>
-        </DialogHeader>
-  
-        <div className="space-y-4 mt-4">
-          <div>
-            <Label className="block font-medium text-gray-700">Title</Label>
+  <>
+  <Button onClick={() => setPopup(true)} className="create-button">
+    Create New Issue
+  </Button>
+
+  {popup && (
+    <div className="modal-overlay">
+      <div className="modal-content">
+        <Dialog open={popup} onOpenChange={setPopup}>
+          <DialogContent className="dialog-box">
+            <DialogHeader>
+              <DialogTitle>Create New Issue</DialogTitle>
+              <DialogDescription>Fill out the issue details below</DialogDescription>
+            </DialogHeader>
+
+            <Label className="label">Title</Label>
             <Input
+            className="inputComponent"
+              placeholder="Issue Title"
               value={newIssueTitle}
               onChange={(e) => setNewIssueTitle(e.target.value)}
-              placeholder="Issue title"
-              className="mt-2 w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#4b2e17]"
             />
-          </div>
-  
-          <div>
-            <Label className="block font-medium text-gray-700 mt-2">Description</Label>
+
+            
+            <Label className=" label statement" >Statement</Label>
             <Input
+            className="inputComponent"
+              placeholder="Statement"
+              value={newIssueStatement}
+              onChange={(e) => setNewIssueSnewIssueStatement(e.target.value)}
+              
+            />
+
+            <Label className="label">Description</Label>
+            <Input className="inputComponent"
+              placeholder="optional description"
               value={newIssueDescription}
               onChange={(e) => setNewIssueDescription(e.target.value)}
-              placeholder="Optional description"
-              className="mt-2 w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#4b2e17]"
             />
-          </div>
-  
-          <div>
-            <Label className="block font-medium text-gray-700 mt-2">Bounty Amount</Label>
+
+
+
+            <Label className="label">Bounty Amount</Label>
             <Input
+            className="inputComponent"
+              placeholder="optional bounty (SOL)"
               value={newIssueAmt}
               onChange={(e) => setNewIssueAmt(e.target.value)}
-              placeholder="Optional bounty (ETH)"
-              className="mt-2 w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#4b2e17]"
             />
-          </div>
-  
-          <div>
-            <Label className="block font-medium text-gray-700 mt-2">Select Repository</Label>
+
+            <Label className="label">Select Repository</Label>
             <select
               value={selectedRepo}
               onChange={(e) => setSelectedRepo(e.target.value)}
-              className="mt-2 w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-[#4b2e17]"
+              className="select-box"
             >
-              <option value="">Select a repository</option>
-              {repoList.map((repo) => (
-                <option key={repo} value={repo.name}>
+              <option value="">Select Repository</option>
+              {repoList.map((repo, index) => (
+                <option key={index} value={repo.name}>
                   {repo.name}
                 </option>
               ))}
             </select>
-          </div>
-  
-          <div>
-            <Label className="block font-medium text-gray-700 mt-2">Labels</Label>
-            <div className="flex flex-wrap gap-2 mt-2">
+
+            <Label className="label">Labels</Label>
+            <div className="label-container">
               {predefinedLabels.map((label) => (
-                <Button
+                <button
                   key={label}
-                  variant={selectedLabels.includes(label) ? "default" : "outline"}
+                  type="button"
                   onClick={() => toggleLabel(label)}
-                  className="text-[#4b2e17] hover:bg-[#5a3c1c] border-[#4b2e17] rounded-lg"
+                  className={`label-chip ${selectedLabels.includes(label) ? "active" : ""}`}
                 >
                   {label}
-                </Button>
+                </button>
               ))}
             </div>
-          </div>
-  
-          <div>
-            <Label className="block font-medium text-gray-700 mt-2">Custom Labels (comma-separated)</Label>
+
+            <Label className="label">Custom Labels (Comma-separated)</Label>
             <Input
+            className="inputComponent"
+              placeholder="Bug, Enhancement"
               value={customLabelsInput}
               onChange={(e) => setCustomLabelsInput(e.target.value)}
-              placeholder="bug, enhancement"
-              className="mt-2 w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#4b2e17]"
             />
-          </div>
-  
-          <div>
-            <Label className="block font-medium text-gray-700 mt-2">Status</Label>
+
+            <Label className="label">Status</Label>
             <select
               value={newIssueStatus}
-              onChange={(e) => setNewIssueStatus(e.target.value as "open" | "closed")}
-              className="mt-2 w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-[#4b2e17]"
+              onChange={(e) => setNewIssueStatus(e.target.value)}
+              className="select-box"
             >
-              <option value="open">Open</option>
-              <option value="closed">Closed</option>
+              <option value="open">OPEN</option>
+              <option value="closed">CLOSED</option>
             </select>
-          </div>
-  
-          <Button
-            className="mt-4 w-full bg-[#4b2e17] text-white hover:bg-[#5a3c1c] rounded-md py-2"
-            onClick={handleCreateIssue}
-            disabled={!newIssueTitle.trim() || !selectedRepo}
-          >
-            Create Issue
-          </Button>
-        </div>
-      </DialogContent>
-    </Dialog>
-  </div>
-  
+
+            <Button onClick={handleCreateIssue} className="submit-button">
+              CREATE ISSUE
+            </Button>
+          </DialogContent>
+        </Dialog>
+      </div>
+    </div>
+  )}
+</>
+
+
   );
 };
 
