@@ -102,12 +102,6 @@ export default function BountyPage() {
     setViewMode('detail');
   };
 
-  const handleClose = () => {
-    setSelectedProblem(null);
-    setViewMode('list');
-    setProblemId(null);
-  };
-
 return (
   <div className="page-container">
     <div className="container">
