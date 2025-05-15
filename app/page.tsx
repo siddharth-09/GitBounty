@@ -1,29 +1,28 @@
-// src/App.tsx
-import AnimatedText from '@/components/AnimatedText';
-import CursorBlob from '@/components/CursorBlob';
-import RiveComponent from '@/components/RiveComponent';
-import React from 'react';
+import React from "react";
+import { Spotlight } from "@/components/ui/spotlight"; 
 
-
-const App: React.FC = () => {
+export default function SpotlightPreview() {
   return (
-    <div className="min-h-[500vh] w-full font-sans bg-[#010313] text-white overflow-x-hidden">
+    <div className="relative flex h-[100vh] w-full overflow-hidden rounded-md bg-[linear-gradient(to_bottom,_#262626,_#030a02)] antialiased md:items-center md:justify-center">
+      <div
+      
+      />
 
-
-      <CursorBlob />
-
-      <section className="w-full h-screen flex items-center justify-center">
-        <div className="relative flex justify-between items-center w-full h-full p-8 overflow-hidden">
-          <div className="-translate-y-20 z-30">
-            <AnimatedText />
-          </div>
-          <div className="absolute right-0 top-1/2 translate-y-[-50%] translate-x-[40%] w-[110rem] h-[110rem] pointer-events-none z-10">
-            <RiveComponent />
-          </div>
-        </div>
-      </section>
+      <Spotlight
+        className="-top-40 left-0 md:-top-20 md:left-60"
+        fill="#14F195"
+      />
+      <div className="relative z-10 mx-auto w-full max-w-7xl p-4 pt-20 md:pt-0">
+        <h1 className="bg-opacity-50 bg-gradient-to-b from-neutral-50 to-neutral-400 bg-clip-text text-center text-4xl font-bold text-transparent md:text-7xl">
+          Spotlight <br /> is the new trend.
+        </h1>
+        <p className="mx-auto mt-4 max-w-lg text-center text-base font-normal text-neutral-300">
+          Spotlight effect is a great way to draw attention to a specific part
+          of the page. Here, we are drawing the attention towards the text
+          section of the page. I don&apos;t know why but I&apos;m running out of
+          copy.
+        </p>
+      </div>
     </div>
   );
-};
-
-export default App;
+}

@@ -121,24 +121,19 @@
   }
 }
 
-:root {
-  --aquamarine: #7FFFD4;
-  --mediumpurple: #9370DB;
+@import "tailwindcss";
+ 
+@theme inline {
+  --animate-spotlight: spotlight 2s ease 0.75s 1 forwards;
 }
-
-.animate-blob {
-  animation: rotateBlob 20s infinite;
-}
-
-@keyframes rotateBlob {
+ 
+@keyframes spotlight {
   0% {
-    transform: rotate(0deg) scale(1, 1);
-  }
-  50% {
-    transform: rotate(180deg) scale(1, 1.5);
+    opacity: 0;
+    transform: translate(-72%, -62%) scale(0.5);
   }
   100% {
-    transform: rotate(360deg) scale(1, 1);
+    opacity: 1;
+    transform: translate(-50%, -40%) scale(1);
   }
 }
-
