@@ -1,0 +1,11 @@
+.rectangle {
+  	width: 100%;
+  	position: relative;
+  	backdrop-filter: blur(35px);
+  	border-radius: 25px;
+  	background-color: rgba(77, 77, 77, 0.1);
+  	border: 3px solid rgba(255, 255, 255, 0.25);
+  	box-sizing: border-box;
+  	height: 67px;
+}
+

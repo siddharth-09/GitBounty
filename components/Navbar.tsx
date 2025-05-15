@@ -1,32 +1,56 @@
-// src/components/Navbar.tsx
-"use client";
-import Link from "next/link";
-import React from "react";
+'use client';
 
-const Navbar: React.FC = () => {
-  const navItems = [
-    { label: 'Home', href: '/' },
-    { label: 'Bounty', href: '/bounty' },
-    { label: 'Wallet', href: '/wallet' },
-    { label: 'Profile', href: '/user' },
-  ];
+import Link from 'next/link';
+import Image from 'next/image';
+import Logo from '@/public/logo.png';
 
+const Navbar = () => {
   return (
-    <nav className="w-full flex items-center justify-start z-50">
-      <div className="text-cyan-400 text-2xl font-bold font-orbitron mr-8">Git Bounty</div>
-      <ul className="absolute left-1/2 -translate-x-1/2 flex gap-8 z-30">
-        {navItems.map((item) => (
-          <li key={item.label}>
-            <Link
-              href={item.href}
-              className="relative inline-block overflow-hidden px-5 py-2 border-2 border-gray-800 bg-[#101301] text-white text-base rounded-full transition-all font-bold font-orbitron hover:border-yellow-300 hover:bg-gray-700 hover:text-yellow-400"
-            >
-              {item.label}
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </nav>
+    <div className='w-full h-[70px] flex justify-center items-center fixed z-50 mt-[2.4rem]'>
+    <div className="w-95/100 top-0 left-0  h-[70px] px-8 flex items-center justify-between rounded-[25px] border border-[rgba(255,255,255,0.2)] backdrop-blur-[20px] bg-[rgba(255,255,255,0.05)] m-8 " >
+      
+      {/* Left side: Logo + Nav Links */}
+      <div className="flex items-center justify-center gap-12">
+        {/* Logo */}
+        <Link href="/">
+          <Image
+            src={Logo}
+            alt="Logo"
+            width={40}
+            height={40}
+            className="rounded-full cursor-pointer"
+            />
+        </Link>
+
+        {/* Navigation Links */}
+        
+      </div>
+      <div className='flex items-center justify-center gap-45'>
+        <Link href="/">
+          <div className="text-[24px] font-light bg-gradient-to-r from-[#14f195] to-[#999] bg-clip-text text-transparent cursor-pointer">
+            Home
+          </div>
+        </Link>
+
+        <Link href="/bounties">
+          <div className="text-[24px] font-light bg-gradient-to-r from-[#14f195] to-[#999] bg-clip-text text-transparent cursor-pointer">
+            Bounties
+          </div>
+        </Link>
+
+        <Link href="/about">
+          <div className="text-[24px] font-light bg-gradient-to-r from-[#14f195] to-[#999] bg-clip-text text-transparent cursor-pointer">
+            About
+          </div>
+        </Link>
+      </div>
+
+      {/* Profile Button */}
+      <button className="relative capitalize font-light text-[20px] text-[#d9d9d9] h-[40px] px-5 rounded-[10px] border border-[rgba(255,255,255,0.2)] shadow-[0px_20px_20px_-10px_rgba(169,99,215,0.4)] bg-gradient-to-b from-[#262626] to-[#030a02] flex items-center justify-center [text-shadow:0px_-2px_2px_rgba(255,255,255,0.1),0px_2px_42px_rgba(0,0,0,0.25),0px_8px_40px_#a963d7] cursor-pointer">
+        Profile
+      </button>
+    </div>
+            </div>
   );
 };
 
