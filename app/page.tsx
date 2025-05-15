@@ -21,11 +21,11 @@ export default function SpotlightPreview() {
 
         {/* Two animated buttons */}
         <div className="mt-8 flex flex-col items-center gap-4 md:flex-row md:justify-center">
-          <button className="relative h-[86px] w-[200px] rounded-[36px] border border-blue shadow-[0px_16px_64px_rgba(104,_1,_255,_0.12)] bg-[linear-gradient(85.13deg,_rgba(104,_1,_254,_0.03),_rgba(217,_217,_217,_0.03))] text-white font-medium cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-[0px_20px_80px_rgba(104,_1,_255,_0.25)] hover:bg-[linear-gradient(85.13deg,_rgba(104,_1,_254,_0.2),_rgba(217,_217,_217,_0.05))]">
+          <button className="relative h-[50px] w-[200px] rounded-[36px] border border-blue shadow-[0px_16px_64px_rgba(104,_1,_255,_0.12)] bg-[linear-gradient(85.13deg,_rgba(104,_1,_254,_0.03),_rgba(217,_217,_217,_0.03))] text-white font-medium cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-[0px_20px_80px_rgba(104,_1,_255,_0.25)] hover:bg-[linear-gradient(85.13deg,_rgba(104,_1,_254,_0.2),_rgba(217,_217,_217,_0.05))]">
             Connect Github
           </button>
 
-          <button className="relative h-[86px] w-[200px] rounded-[36px] border border-blue shadow-[0px_16px_64px_rgba(104,_1,_255,_0.12)] bg-[linear-gradient(85.13deg,_rgba(104,_1,_254,_0.03),_rgba(217,_217,_217,_0.03))] text-white font-medium cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-[0px_20px_80px_rgba(104,_1,_255,_0.25)] hover:bg-[linear-gradient(85.13deg,_rgba(104,_1,_254,_0.2),_rgba(217,_217,_217,_0.05))]">
+          <button className="relative h-[50px] w-[200px] rounded-[36px] border border-blue shadow-[0px_16px_64px_rgba(104,_1,_255,_0.12)] bg-[linear-gradient(85.13deg,_rgba(104,_1,_254,_0.03),_rgba(217,_217,_217,_0.03))] text-white font-medium cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-[0px_20px_80px_rgba(104,_1,_255,_0.25)] hover:bg-[linear-gradient(85.13deg,_rgba(104,_1,_254,_0.2),_rgba(217,_217,_217,_0.05))]">
             Explore Bounty
           </button>
         </div>
