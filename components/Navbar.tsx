@@ -6,8 +6,8 @@ import Logo from '@/public/logo.svg';
 
 const Navbar = () => {
   return (
-    <div className='w-full h-[70px] flex justify-center items-center fixed z-50 mt-[2.4rem]'>
-    <div className="w-95/100 top-0 left-0  h-[70px] px-8 flex items-center justify-between rounded-[25px] border border-[rgba(255,255,255,0.2)] backdrop-blur-[20px] bg-[rgba(255,255,255,0.05)] m-8 " >
+    <div className='w-full h-[70px] flex justify-center items-center fixed mt-[2.4rem] all-unset'>
+    <div className="w-95/100 top-0 left-0 z-50 fixed h-[70px] px-8 flex items-center justify-between rounded-[25px] border border-[rgba(255,255,255,0.2)] backdrop-blur-[20px] bg-[rgba(255,255,255,0.05)] m-8 " >
       
       {/* Left side: Logo + Nav Links */}
       <div className="flex items-center justify-center gap-12">
@@ -18,7 +18,7 @@ const Navbar = () => {
             alt="Logo"
             width={40}
             height={40}
-            className="rounded-full cursor-pointer"
+            className="cursor-pointer"
             />
         </Link>
 

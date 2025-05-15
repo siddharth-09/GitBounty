@@ -45,10 +45,13 @@ console.log(githubUser)
   }
 
   return (
-    <div className="">
+    <div>
       {githubUser ? (
-        <div className="">
+        <>
           {/* Profile Card */}
+          <div className="outerProfileCard">
+
+         
           <div className="profileCardContainer">
             <div className="profileImgContainer">
 
@@ -93,9 +96,10 @@ console.log(githubUser)
               </a>
             </div>
             <ProfileTable />
+             </div>
           </div>
           <RepoIssues userName={githubUser.login}/>
-          </div>
+          </>
       ) : (
         <p>Loading GitHub data...</p>
       )}

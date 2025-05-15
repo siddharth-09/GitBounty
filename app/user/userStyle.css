@@ -1,20 +1,37 @@
 .profileCardContainer{
     padding: 4rem;
-    min-height: 80vh;
-    margin: 3rem;
-    box-shadow: 0 0.1px 0.1px ;
-    background: rgba( 255, 255, 255, 0.25 );
-    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
-    backdrop-filter: blur( 9.5px );
-    -webkit-backdrop-filter: blur( 9.5px );
-    border-radius: 10px;
-    border: 3px solid rgba(255, 255, 255, 0.39);
+    margin-top: 10%;
     display: flex;
-/* justify-content: center; */
     align-items: center;
     flex-direction: column;
-
+    position: relative;
+    border-radius: 15px;
+border: 3px solid rgba(255, 255, 255, 0.034);
+background: rgba(77, 77, 77, 0.10);
+backdrop-filter: blur(17.5px);
 }
+
+.profileCardContainer::after {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.486),rgba(255, 255, 255, 0.103));
+  border-radius: 15px;
+  z-index: -1;
+  opacity: 1;
+  border: none;
+  height: 100%;
+  width: 100%;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 3px; /* same as original border width */
+  box-sizing: border-box;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
 .profileImg {
     height: 10rem;
     width: 10rem;
@@ -25,7 +42,16 @@
     background: linear-gradient(to bottom, #ffffff, #666666);
     padding: 5px; 
     border-radius: 50%; 
-    display: inline-block;
+  }
+
+  .outerProfileCard{
+    top: 0;
+    position: relative;
+    margin: 5%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
   }
 
   
@@ -68,9 +94,28 @@
     margin-top: 2rem;
     width: 80%;
     padding: 2rem;
-    background: linear-gradient(to bottom, #1c1c3b, #101020);
-    border-radius: 1rem;
-   
+background: rgba(77, 77, 77, 0.10);
+backdrop-filter: blur(17.5px);
+  }
+  .profileTableContainer::after {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.486),rgba(255, 255, 255, 0.103));
+  border-radius: 15px;
+  z-index: -1;
+  opacity: 1;
+  border: none;
+  height: 100%;
+  width: 100%;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 3px; /* same as original border width */
+  box-sizing: border-box;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
   }
   
   .customTable {
