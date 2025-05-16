@@ -17,6 +17,34 @@ export default function UserProfile() {
   const { data: session } = useSession();
   const [githubUser, setGithubUser] = useState<any>(null);
   useEffect(() => {
+  const observer = new MutationObserver(() => {
+    const elements = document.querySelectorAll("body, body *");
+
+    elements.forEach((element) => {
+      if (element.childNodes.length) {
+        element.childNodes.forEach((node) => {
+          if (
+            node.nodeType === 3 && // Text node
+            node.nodeValue &&
+            node.nodeValue.includes("Select")
+          ) {
+            node.nodeValue = node.nodeValue.replace("Select", "Connect");
+            observer.disconnect(); // Stop observing after the change
+          }
+        });
+      }
+    });
+  });
+
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true,
+  });
+
+  return () => observer.disconnect();
+}, []);
+
+  useEffect(() => {
     if (session?.accessToken) {
       // Call our API route with token
       fetch("/api/user", {
@@ -32,7 +60,7 @@ export default function UserProfile() {
           console.error("Error fetching GitHub user:", err);
         });
     }
-
+    
   }, [session?.accessToken]);
 
   if (!session) {
