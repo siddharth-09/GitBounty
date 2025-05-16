@@ -1,4 +1,6 @@
 'use client';
+
+import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
 
 interface Problem {
@@ -10,52 +12,13 @@ interface Problem {
   github: string;
   deadline: string;
   bounty_amt: string;
+  repo:string;
 }
-
-const ProblemDetail = ({ problem }: { problem: Problem }) => {
-  return (
-    <div className="backdrop-blur-[35px] bg-[#696969]/40 border-[3px] border-blueviolet rounded-[15px] p-6 w-[314px] min-h-[170px] text-white shadow-lg">
-      <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <span className="text-lg">📋</span>
-          <span className="font-semibold">Title:</span>
-          <span>{problem.title}</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="text-lg">📋</span>
-          <span className="font-semibold">Statement:</span>
-          <span>{problem.statement}</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="text-lg">⏰</span>
-          <span className="font-semibold">Deadline:</span>
-          <span>{problem.deadline}</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="text-lg">🐙</span>
-          <span className="font-semibold">GitHub:</span>
-          <a href={problem.github} target="_blank" rel="noopener noreferrer" className="underline text-blue-300">
-            View Repository
-          </a>
-        </div>
-        <div>
-          <span className="font-semibold block mb-1">Description:</span>
-          <p className="text-sm text-gray-100">{problem.description}</p>
-        </div>
-      </div>
-      <button className="mt-4 w-full bg-blueviolet hover:bg-indigo-600 transition text-white py-2 px-4 rounded-md">
-        Register
-      </button>
-    </div>
-  );
-};
 
 export default function BountyPage() {
   const [problems, setProblems] = useState<Problem[]>([]);
   const [search, setSearch] = useState('');
   const [selectedProblem, setSelectedProblem] = useState<Problem | null>(null);
-  const [viewMode, setViewMode] = useState<'list' | 'detail'>('list');
-  const [problemId, setProblemId] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -67,7 +30,7 @@ export default function BountyPage() {
         const { issue } = await response.json();
         setProblems(issue);
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'Unknown error occurred');
+        setError(err instanceof Error ? err.message : 'Unknown error');
       } finally {
         setIsLoading(false);
       }
@@ -79,87 +42,79 @@ export default function BountyPage() {
     problem.title.toLowerCase().includes(search.toLowerCase()) ||
     problem.statement.toLowerCase().includes(search.toLowerCase())
   );
-
-  useEffect(() => {
-    if (problemId !== null) {
-      const problem = problems.find(p => p.id === problemId);
-      if (problem) {
-        setSelectedProblem(problem);
-        setViewMode('detail');
-      }
-    }
-  }, [problemId, problems]);
-
-  const handleProblemClick = (problem: Problem) => {
-    setSelectedProblem(problem);
-    setProblemId(problem.id);
-    setViewMode('detail');
-  };
+  // console.log(pithub)roblems.g
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#1f1f1f] to-[#3a3a3a] text-white px-4 py-8">
-      <div className="max-w-5xl mx-auto">
-        <div className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
-          <h1 className="text-3xl font-bold">
-            {viewMode === 'detail' ? 'Mission' : 'Bounties'}
-          </h1>
-
-          {viewMode === 'detail' ? (
-            <button
-              className="bg-blueviolet px-4 py-2 rounded-md text-white hover:bg-indigo-600"
-              onClick={() => setViewMode('list')}
-            >
-              Back to Bounty List
-            </button>
-          ) : (
-            <div className="relative">
-              <input
-                type="text"
-                placeholder="Search problems..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="pl-10 pr-4 py-2 rounded-md bg-gray-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              <span className="absolute left-3 top-2.5 text-white">🔍</span>
-            </div>
-          )}
+    <div className="min-h-screen px-6 py-10 text-white font-sans mt-[10%]">
+      <div className="max-w-6xl mx-auto">
+        <div className="flex flex-col sm:flex-row justify-between items-center mb-10 gap-4">
+          <h1 className="text-4xl font-bold tracking-wide">Explore Bounties</h1>
+          <input
+            type="text"
+            placeholder="Search for a bounty..."
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            className="w-full sm:w-80 px-4 py-2 bg-[#1e1e1e] text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E6BE8A]"
+          />
         </div>
 
-        {viewMode === 'detail' && selectedProblem ? (
-          <ProblemDetail problem={selectedProblem} />
-        ) : isLoading ? (
-          <div className="text-center mt-10">Loading missions...</div>
+        {isLoading ? (
+          <div className="text-center text-gray-400 mt-20">Fetching bounties...</div>
         ) : error ? (
-          <div className="text-center mt-10">
-            <p className="text-red-400 mb-2">Error: {error}</p>
-            <button
-              onClick={() => window.location.reload()}
-              className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-700"
-            >
-              Try Again
-            </button>
-          </div>
+          <div className="text-center text-red-400 mt-20">{error}</div>
         ) : (
-          <div className="space-y-4">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filtered.map((problem) => (
-                <div
-                  key={problem.id}
-                  className="cursor-pointer bg-[#2e2e2e] hover:bg-[#3c3c3c] p-5 rounded-xl border border-gray-700 transition"
-                  onClick={() => handleProblemClick(problem)}
-                >
-                  <h3 className="text-xl font-semibold mb-2">{problem.title}</h3>
-                  <p className="text-sm text-gray-300 mb-3">{problem.statement}</p>
-                  <div className="flex flex-wrap gap-2 text-sm text-gray-400">
-                    <span className="bg-gray-700 px-2 py-1 rounded">React</span>
-                    <span className="bg-gray-700 px-2 py-1 rounded">Web3</span>
-                  </div>
-                  <div className="flex justify-between mt-3 text-sm">
-                    <span className="text-yellow-400">{problem.bounty_amt} 🪙</span>
-                    <span className="text-pink-400">⏱ 2 Days</span>
-                  </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filtered.map(problem => (
+              <div
+                key={problem.id}
+                className="relative border-design rounded-xl p-5 shadow-lg hover:scale-[1.02] transition-transform duration-200 cursor-pointer"
+                onClick={() => setSelectedProblem(problem)}
+              >
+                <h3 className="text-xl font-semibold mb-2 text-white">{problem.title}</h3>
+                <p className="text-sm text-gray-300 mb-3">{problem.statement}</p>
+                <div className="flex justify-between text-sm text-gray-400">
+                  <span><img src="/usdc.svg" alt="USDC" className="w-5 h- inline" /> {problem.bounty_amt} </span>
+                  <span>{problem.deadline}</span>
                 </div>
-              ))}
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Modal */}
+        {selectedProblem && (
+          <div className="fixed inset-0 z-50 bg-[linear-gradient(#272727,_#030a02)]  bg-opacity-20 flex items-center justify-center px-4">
+            <div className="relative border-design rounded-2xl w-full max-w-lg p-6 text-white shadow-2xl">
+              <button
+                onClick={() => setSelectedProblem(null)}
+                className="absolute top-3 right-4 text-gray-400 hover:text-white text-2xl"
+              >
+                &times;
+              </button>
+              <h2 className="text-2xl font-bold mb-3">{selectedProblem.title}</h2>
+              <p className="text-gray-300 mb-2">{selectedProblem.statement}</p>
+              <p className="text-gray-400 text-sm mb-4">{selectedProblem.description}</p>
+              <div className="text-sm text-gray-400 space-y-2">
+                <div><strong>Deadline:</strong> {selectedProblem.deadline}</div>
+                <div><strong>GitHub:</strong>{' '}
+  
+
+
+                  <a
+  href={`https://github.com/${selectedProblem.userId}/${selectedProblem.repo}/issues`}
+  target="_blank"
+  className="cursor-pointer text-[#8ae69f] underline hover:opacity-80"
+>
+  View Repository
+</a>
+
+                </div>
+              </div>
+              <Link href={`github/`}>
+              <button className="mt-6 w-full border-design font-semibold py-2 rounded-md hover:opacity-90 transition">
+                Register
+              </button>
+              </Link>
             </div>
           </div>
         )}

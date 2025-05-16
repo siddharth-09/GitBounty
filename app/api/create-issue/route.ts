@@ -35,12 +35,13 @@ async function createGithubIssue({ token, repo, userId, title, body, labels }: {
 }
 
 // ⏩ Function 2 — Store Issue in Supabase
-async function storeIssueInSupabase({ userId, title, body, statement, bounty_amt}: {
+async function storeIssueInSupabase({ userId, title, body, statement, bounty_amt,repo}: {
   userId: string,
   title: string,
   body: string,
   statement: string,
-  bounty_amt : string
+  bounty_amt : string,
+  repo:string
 }) {
   const supabase = await createClient()
 
@@ -51,6 +52,7 @@ async function storeIssueInSupabase({ userId, title, body, statement, bounty_amt
       description: body,
       bounty_amt : bounty_amt,
       statement: statement,
+      repo: repo
     },
   ])
 
@@ -73,7 +75,7 @@ export async function POST(request: Request) {
     const githubIssue = await createGithubIssue({ token, repo, userId, title, body, labels })
 
     // 2️⃣ Store in Supabase
-    await storeIssueInSupabase({ userId, title, body, statement,bounty_amt })
+    await storeIssueInSupabase({ userId, title, body, statement,bounty_amt,repo })
 
     // ✅ Success response
     return NextResponse.json({ message: 'Issue created and stored successfully', githubIssue })
