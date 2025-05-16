@@ -15,8 +15,8 @@ export default function SignInPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#010313] to-[#0c0c3d] text-white px-4">
-      <div className="max-w-md w-full bg-[#101010] rounded-3xl shadow-2xl p-10 border border-gray-800 backdrop-blur-sm bg-opacity-80">
+    <div className="min-h-screen flex items-center justify-center  to-[#0c0c3d] text-white px-4">
+      <div className="max-w-md w-full rounded-3xl shadow-2xl p-10 border border-gray-800 backdrop-blur-sm bg-opacity-80">
         <h1 className="text-4xl font-orbitron font-bold text-cyan-400 text-center mb-6">
           Git Bounty
         </h1>

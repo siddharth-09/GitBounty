@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { useSession } from "next-auth/react";
+import { ToastContainer, toast, Bounce } from 'react-toastify';
 
 interface CreateIssueComponentProps {
   userName: string;
@@ -54,58 +55,83 @@ const CreateIssueComponent = (props: CreateIssueComponentProps) => {
       repoView();
     }
   }, [session]);
-
   const handleCreateIssue = async () => {
-    const customLabels = customLabelsInput
-      .split(",")
-      .map((label) => label.trim())
-      .filter((label) => label !== "");
+  if (
+    !newIssueTitle.trim() ||
+    !newIssueDescription.trim() ||
+    !newIssueStatement.trim() ||
+    !newIssueAmt.trim() ||
+    !newIssueStatus.trim() ||
+    !selectedRepo.trim()
+  ) {
+    toast.warn('Please fill in all required fields before creating the issue.!', {
+position: "top-right",
+autoClose: 5000,
+hideProgressBar: false,
+closeOnClick: true,
+pauseOnHover: true,
+draggable: true,
+progress: undefined,
+theme: "colored",
+transition: Bounce,
+});
+    return;
+  }
 
-    const allLabels = [...selectedLabels, ...customLabels];
+  const customLabels = customLabelsInput
+    .split(",")
+    .map((label) => label.trim())
+    .filter((label) => label !== "");
 
-    if (session?.accessToken) {
-      const issueData = {
-        title: newIssueTitle,
-        description: newIssueDescription,
-        bounty: newIssueAmt,
-        status: newIssueStatus,
-        repository: selectedRepo,
-        labels: allLabels,
-        statement: newIssueStatement,
-      };
+  const allLabels = [...selectedLabels, ...customLabels];
 
-      console.log("Issue created:", issueData);
+  if (session?.accessToken) {
+   
 
-      const res = await fetch("/api/create-issue", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          token: session.accessToken,
-          repo: selectedRepo,
-          title: newIssueTitle,
-          body: newIssueDescription,
-          labels: allLabels,
-          userId: props.userName,
-          statement: newIssueStatement,
-          bounty_amt: newIssueAmt,
-          deadline: '10/10/2005',
-          status: newIssueStatus,
-        }),
-      });
+   try {
+  const res = await fetch("/api/create-issue", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      token: session.accessToken,
+      repo: selectedRepo,
+      title: newIssueTitle,
+      body: newIssueDescription,
+      labels: allLabels,
+      userId: props.userName,
+      statement: newIssueStatement,
+      bounty_amt: newIssueAmt,
+      deadline: "10/10/2005", // make dynamic later
+      status: newIssueStatus,
+    }),
+  });
 
-      console.log(res);
+  if (!res.ok) {
+    // Handles HTTP errors (e.g., 400, 500)
+    const errorData = await res.json();
+    throw new Error(errorData.message || "Failed to create issue.");
+  }
 
-      setNewIssueTitle("");
-      setNewIssueDescription("");
-      setNewIssueAmt("");
-      setNewIssueStatus("open");
-      setSelectedRepo("");
-      setSelectedLabels([]);
-      setCustomLabelsInput("");
-      setNewIssueStatement("")
-      setPopup(false);
-    }
-  };
+  toast.success("Issue created successfully!");
+
+  // Reset form fields
+  setNewIssueTitle("");
+  setNewIssueDescription("");
+  setNewIssueAmt("");
+  setNewIssueStatus("open");
+  setSelectedRepo("");
+  setSelectedLabels([]);
+  setCustomLabelsInput("");
+  setNewIssueStatement("");
+  setPopup(false);
+
+} catch (error: any) {
+  toast.error(`Error creating issue: ${error.message || "Something went wrong."}`);
+}
+
+  }
+};
+
 
   return (
     <>
@@ -153,7 +179,7 @@ const CreateIssueComponent = (props: CreateIssueComponentProps) => {
                     <Label className="block text-gray-300 mb-1">Description</Label>
                     <Input
                       className="w-full bg-gray-800 border-gray-700 text-white placeholder-gray-400 focus:border-cyan-500 focus:ring-cyan-500"
-                      placeholder="Detailed description (optional)"
+                      placeholder="Detailed description"
                       value={newIssueDescription}
                       onChange={(e) => setNewIssueDescription(e.target.value)}
                     />
@@ -163,7 +189,7 @@ const CreateIssueComponent = (props: CreateIssueComponentProps) => {
                     <Label className="block text-gray-300 mb-1">Bounty Amount</Label>
                     <Input
                       className="w-full bg-gray-800 border-gray-700 text-white placeholder-gray-400 focus:border-cyan-500 focus:ring-cyan-500"
-                      placeholder="Bounty amount in SOL (optional)"
+                      placeholder="Bounty amount in SOL"
                       value={newIssueAmt}
                       onChange={(e) => setNewIssueAmt(e.target.value)}
                     />
@@ -235,6 +261,19 @@ const CreateIssueComponent = (props: CreateIssueComponentProps) => {
           </div>
         </div>
       )}
+            <ToastContainer
+position="top-right"
+autoClose={5000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+theme="colored"
+transition={Bounce}
+/>
     </>
   );
 };

@@ -26,7 +26,6 @@ export default function UserProfile() {
         .then((res) => res.json())
         .then((data) => {
           setGithubUser(data);
-          console.log("GitHub user data:", data);
         })
         .catch((err) => {
           console.error("Error fetching GitHub user:", err);
@@ -34,8 +33,6 @@ export default function UserProfile() {
     }
 
   }, [session?.accessToken]);
-console.log(githubUser)
-
 
   if (!session) {
     return (
@@ -46,7 +43,7 @@ console.log(githubUser)
   }
 
   return (
-    <div>
+    <>
       {githubUser ? (
         <>
           {/* Profile Card */}
@@ -97,6 +94,6 @@ console.log(githubUser)
       ) : (
         <p>Loading GitHub data...</p>
       )}
-    </div>
+    </>
   );
 }
