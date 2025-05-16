@@ -9,6 +9,8 @@ import ProfileTable from "@/components/ProfileTable";
 import SignInPage from "../api/auth/signin/page";
 // Style
 import '../user/userStyle.css'
+import { Wallet } from "lucide-react";
+import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 
 
 export default function UserProfile() {
@@ -78,14 +80,7 @@ console.log(githubUser)
               >
                 Twitter ✨
               </a>
-              <a
-                href={githubUser.html_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-600 hover:text-blue-800 underline handleButton"
-              >
-                Wallet Connect ✨
-              </a>
+              <WalletMultiButton/>
               <a
                 href={githubUser.html_url}
                 target="_blank"
