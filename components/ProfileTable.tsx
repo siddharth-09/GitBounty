@@ -1,52 +1,27 @@
 'use client';
 
 import Image from 'next/image';
-import xd from '@/public/xd-icon.jpg';
+import xd from '@/public/image.png';
+import auth from '@/public/auth2.png'
 
 const tableData = [
   {
-    icon: xd,
-    issue: 'Chakra Soft UI Version',
-    tags: [xd, xd, xd],
-    bounty: '$14,000',
+    icon: null,
+    issue: 'Implement OAuth2 Authentication',
+    tags: [auth],
+    bounty: '$1500',
     status: 'Completed',
   },
   {
     icon: null,
-    issue: 'Add Progress Track',
-    tags: [xd, xd],
-    bounty: '$3,000',
-    status: 'Completed',
-  },
-  {
-    icon: xd,
-    issue: 'Fix Platform Errors',
+    issue: 'Develop Cross-Platform Notification System',
     tags: [xd],
-    bounty: 'Not set',
+    bounty: '$3200',
     status: 'Completed',
   },
-  {
-    icon: xd,
-    issue: 'Launch our Mobile App',
-    tags: [xd, xd],
-    bounty: '$32,000',
-    status: 'Completed',
-  },
-  {
-    icon: xd,
-    issue: 'Add the New Pricing Page',
-    tags: [xd, xd],
-    bounty: '$400',
-    status: 'Completed',
-  },
-  {
-    icon: xd,
-    issue: 'Redesign New Online Shop',
-    tags: [xd],
-    bounty: '$7,600',
-    status: 'Completed',
-  },
+ 
 ];
+
 
 export default function ProfileTable() {
   return (

@@ -10,6 +10,7 @@ import SignInPage from "../api/auth/signin/page";
 // Style
 import '../user/userStyle.css'
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
+import { FaGithub, FaTwitter } from "react-icons/fa";
 
 
 export default function UserProfile() {
@@ -67,25 +68,32 @@ export default function UserProfile() {
             <p className="text-[#5e4c3a] mt-2 text-white">
               <strong>UserName:</strong> {githubUser.login}
             </p>
-            <div className="flex justify-center mt-4 space-x-6">
-            <a
-                href={githubUser.html_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-600 hover:text-blue-800 underline handleButton"
-              >
-                Twitter ✨
-              </a>
-              <WalletMultiButton/>
-              <a
-                href={githubUser.html_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-600 hover:text-blue-800 underline handleButton"
-              >
-                GitHub ✨
-              </a>
-            </div>
+            <div className="flex justify-center mt-4 space-x-6 items-center">
+  <a
+    href={githubUser.html_url}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="flex items-center space-x-2 text-blue-600 hover:text-blue-800 underline handleButton"
+  >
+    <FaTwitter />
+    <span>Twitter</span>
+  </a>
+
+  <div>
+    <WalletMultiButton />
+  </div>
+
+  <a
+    href={githubUser.html_url}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="flex items-center space-x-2 text-blue-600 hover:text-blue-800 underline handleButton"
+  >
+    <FaGithub />
+    <span>GitHub</span>
+  </a>
+</div>
+
             <ProfileTable />
              </div>
           </div>
