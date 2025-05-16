@@ -1,8 +1,9 @@
-
+"use client"
 import React from "react";
 import { Spotlight } from "@/components/ui/spotlight";
 import Circuit_Riv from "@/components/Circuit_Riv";
 import TimTim from "@/components/TimTim";
+import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 
 export default function SpotlightPreview() {
   return (
@@ -34,6 +35,7 @@ export default function SpotlightPreview() {
         </div>
           <Circuit_Riv/>
       </div>
+          <WalletMultiButton />
         <TimTim/>
     </div>
   );
