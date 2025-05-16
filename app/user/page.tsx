@@ -9,7 +9,6 @@ import ProfileTable from "@/components/ProfileTable";
 import SignInPage from "../api/auth/signin/page";
 // Style
 import '../user/userStyle.css'
-import { Wallet } from "lucide-react";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 
 
