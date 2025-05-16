@@ -2,7 +2,6 @@
 /* eslint-disable  @typescript-eslint/no-explicit-any */
 
 import React, { useState, useEffect } from 'react';
-import './page.css';
 
 interface Problem {
   id: number;
@@ -14,51 +13,48 @@ interface Problem {
   deadline: string;
   bounty_amt: string;
 }
-//yoo
-
-
 
 const ProblemDetail = ({ problem }: { problem: Problem }) => {
   return (
-    <div className="problem-detail-card">
-  <div className="problem-info">
-    <div className="info-row">
-      <span className="icon">📋</span>
-      <span className="label">Title :</span>
-      <span className="value">{problem.title}</span>
+    <div className="backdrop-blur-[35px] bg-[#696969]/40 border-[3px] border-blueviolet rounded-[15px] p-6 w-[314px] min-h-[170px] text-white shadow-lg">
+      <div className="space-y-3">
+        <div className="flex items-center gap-2">
+          <span className="text-lg">📋</span>
+          <span className="font-semibold">Title:</span>
+          <span>{problem.title}</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="text-lg">📋</span>
+          <span className="font-semibold">Statement:</span>
+          <span>{problem.statement}</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="text-lg">⏰</span>
+          <span className="font-semibold">Deadline:</span>
+          <span>{problem.deadline}</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="text-lg">🐙</span>
+          <span className="font-semibold">GitHub:</span>
+          <a href={problem.github} target="_blank" rel="noopener noreferrer" className="underline text-blue-300">
+            View Repository
+          </a>
+        </div>
+        <div>
+          <span className="font-semibold block mb-1">Description:</span>
+          <p className="text-sm text-gray-100">{problem.description}</p>
+        </div>
+      </div>
+      <button className="mt-4 w-full bg-blueviolet hover:bg-indigo-600 transition text-white py-2 px-4 rounded-md">
+        Register
+      </button>
     </div>
-    <div className="info-row">
-      <span className="icon">📋</span>
-      <span className="label">Statement :</span>
-      <span className="value">{problem.statement}</span>
-    </div>
-    <div className="info-row">
-      <span className="icon">⏰</span>
-      <span className="label">Deadline :</span>
-      <span className="value">{problem.deadline}</span>
-    </div>
-    <div className="info-row">
-      <span className="icon">🐙</span>
-      <span className="label">GitHub :</span>
-      <a href={problem.github} target="_blank" rel="noopener noreferrer" className="github-link">
-        View Repository
-      </a>
-    </div>
-    <div className="info-row description-row">
-      <span className="label">Description</span>
-      <p className="description-text">{problem.description}</p>
-    </div>
-  </div>
-
-  <button className="register-button">Register</button>
-</div>
-
   );
 };
 
 export default function BountyPage() {
   const [problems, setProblems] = useState<Problem[]>([]);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
   const [selectedProblem, setSelectedProblem] = useState<Problem | null>(null);
   const [viewMode, setViewMode] = useState<'list' | 'detail'>('list');
   const [problemId, setProblemId] = useState<number | null>(null);
@@ -102,84 +98,74 @@ export default function BountyPage() {
     setViewMode('detail');
   };
 
-return (
-  <div className="page-container">
-    <div className="container">
-      <div className="TitleAndSearch">
-  <h1 className="heading">
-    {viewMode === 'detail' ? 'Mission' : 'Bounties'}
-  </h1>
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-[#1f1f1f] to-[#3a3a3a] text-white px-4 py-8">
+      <div className="max-w-5xl mx-auto">
+        <div className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
+          <h1 className="text-3xl font-bold">
+            {viewMode === 'detail' ? 'Mission' : 'Bounties'}
+          </h1>
 
-  {viewMode === 'detail' && (
-    <button className="back-button" onClick={() => setViewMode('list')}>
-      Back to Bounty List
-    </button>
-  )}
-
-  {viewMode !== 'detail' && (
-    <div className="InputContainer">
-      <input
-        type="text"
-        placeholder="Search problems..."
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        className="search-input"
-        id="input"
-      />
-      <label className="labelforsearch" htmlFor="input">
-        <svg className="searchIcon" viewBox="0 0 512 512">
-          <path d="..."></path>
-        </svg>
-      </label>
-    </div>
-  )}
-</div>
-
-      {viewMode === 'detail' && selectedProblem ? (
-  <>
-    
-    <ProblemDetail problem={selectedProblem} />
-  </>
-)  : isLoading ? (
-        <div className="loader">Loading missions...</div>
-      ) : error ? (
-        <div className="error">
-          <p>Error: {error}</p>
-          <button onClick={() => window.location.reload()} className="try-again-btn">
-            Try Again
-          </button>
-        </div>
-      ) : (
-        <div className="table-wrapper">
-          <div className="table-header">
-            <div>Issues Created</div>
-            <div>Tags</div>
-            <div>Bounty</div>
-            <div>Due</div>
-          </div>
-
-          {filtered.map((problem) => (
-            <div
-              key={problem.id}
-              className="table-row"
-              onClick={() => handleProblemClick(problem)}
+          {viewMode === 'detail' ? (
+            <button
+              className="bg-blueviolet px-4 py-2 rounded-md text-white hover:bg-indigo-600"
+              onClick={() => setViewMode('list')}
             >
-              <div className="issue">
-                <h3 className="card-title">{problem.title}</h3>
-                <p className="card-statement">{problem.statement}</p>
-              </div>
-              <div className="tags">
-                <span className="tag">React</span>
-                <span className="tag">Web3</span>
-              </div>
-              <div className="bounty">{problem.bounty_amt} 🪙</div>
-              <div className="due">⏱ 2 Days</div>
+              Back to Bounty List
+            </button>
+          ) : (
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="Search problems..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="pl-10 pr-4 py-2 rounded-md bg-gray-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              <span className="absolute left-3 top-2.5 text-white">🔍</span>
             </div>
-          ))}
+          )}
         </div>
-      )}
-    </div>
-  </div>
-);
 
+        {viewMode === 'detail' && selectedProblem ? (
+          <ProblemDetail problem={selectedProblem} />
+        ) : isLoading ? (
+          <div className="text-center mt-10">Loading missions...</div>
+        ) : error ? (
+          <div className="text-center mt-10">
+            <p className="text-red-400 mb-2">Error: {error}</p>
+            <button
+              onClick={() => window.location.reload()}
+              className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-700"
+            >
+              Try Again
+            </button>
+          </div>
+        ) : (
+          <div className="space-y-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filtered.map((problem) => (
+                <div
+                  key={problem.id}
+                  className="cursor-pointer bg-[#2e2e2e] hover:bg-[#3c3c3c] p-5 rounded-xl border border-gray-700 transition"
+                  onClick={() => handleProblemClick(problem)}
+                >
+                  <h3 className="text-xl font-semibold mb-2">{problem.title}</h3>
+                  <p className="text-sm text-gray-300 mb-3">{problem.statement}</p>
+                  <div className="flex flex-wrap gap-2 text-sm text-gray-400">
+                    <span className="bg-gray-700 px-2 py-1 rounded">React</span>
+                    <span className="bg-gray-700 px-2 py-1 rounded">Web3</span>
+                  </div>
+                  <div className="flex justify-between mt-3 text-sm">
+                    <span className="text-yellow-400">{problem.bounty_amt} 🪙</span>
+                    <span className="text-pink-400">⏱ 2 Days</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
 }

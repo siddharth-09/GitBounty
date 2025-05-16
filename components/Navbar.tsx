@@ -32,7 +32,7 @@ const Navbar = () => {
           </div>
         </Link>
 
-        <Link href="/bounties">
+        <Link href="/bounty">
           <div className="text-[24px] font-light bg-gradient-to-r from-[#14f195] to-[#999] bg-clip-text text-transparent cursor-pointer">
             Bounties
           </div>
@@ -46,9 +46,12 @@ const Navbar = () => {
       </div>
 
       {/* Profile Button */}
+      <Link href='/user'>
+      
       <button className="relative capitalize font-light text-[20px] text-[#d9d9d9] h-[40px] px-5 rounded-[10px] border border-[rgba(255,255,255,0.2)] shadow-[0px_20px_20px_-10px_rgba(169,99,215,0.4)] bg-gradient-to-b from-[#262626] to-[#030a02] flex items-center justify-center [text-shadow:0px_-2px_2px_rgba(255,255,255,0.1),0px_2px_42px_rgba(0,0,0,0.25),0px_8px_40px_#a963d7] cursor-pointer">
         Profile
       </button>
+      </Link>
     </div>
             </div>
   );
