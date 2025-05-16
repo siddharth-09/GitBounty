@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { useSession } from "next-auth/react";
-import { ToastContainer, toast, Bounce } from 'react-toastify';
+import { ToastContainer, toast, Slide } from 'react-toastify';
 
 interface CreateIssueComponentProps {
   userName: string;
@@ -73,7 +73,7 @@ pauseOnHover: true,
 draggable: true,
 progress: undefined,
 theme: "colored",
-transition: Bounce,
+transition: Slide,
 });
     return;
   }
@@ -112,7 +112,9 @@ transition: Bounce,
     throw new Error(errorData.message || "Failed to create issue.");
   }
 
-  toast.success("Issue created successfully!");
+  toast.success("Issue created successfully!",{
+    transition: Slide,
+  });
 
   // Reset form fields
   setNewIssueTitle("");
@@ -272,7 +274,7 @@ pauseOnFocusLoss
 draggable
 pauseOnHover
 theme="colored"
-transition={Bounce}
+transition={Slide}
 />
     </>
   );
